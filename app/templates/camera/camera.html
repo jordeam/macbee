@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Flasky{% endblock %}
+
+{% block page_content %}
+
+<div class="page-header">
+    <h1>Camera</h1>
+
+    <div class="container">
+        <div class="row">
+            <ul>
+                <li> Camera: {{ "ON" if camera_on else "OFF" }} </li>
+                <li> Recording {{ "ON" if rec else "OFF" }} </li>
+            </ul>
+        </div>
+        <div class="row">
+			      <form method="post" action="{{ url_for('cam.tasks') }}">
+
+                {% if camera_on%}
+			          <input type="submit" value="Stop View" name="stop" />
+                {% else %}
+                <input type="submit" value="View Camera" name="start" />
+                {% endif %}
+
+                {% if rec %}
+
+			          <input type="submit" value="Stop Recording" name="rec_stop" />
+
+                {% else %}
+
+			          <input type="submit" value="Capture" name="click"/>
+
+                {% if grey %}
+			          <input type="submit" value="Color" name="color" />
+                {% else %}
+			          <input type="submit" value="Grey" name="grey" />
+                {% endif %}
+
+                {% if neg %}
+			          <input type="submit" value="Positive" name="pos" />
+                {% else %}
+			          <input type="submit" value="Negative" name="neg" />
+                {% endif %}
+
+			          <input type="submit" value="Start Recording" name="rec_start" />
+                {% endif %}
+			      </form>
+                <br>
+                {% if camera_on %}
+                <img src="{{ url_for('cam.video_feed') }}" height="80%">
+                {% else %}
+                <img src="{{ current_user.gravatar() }}">
+                {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

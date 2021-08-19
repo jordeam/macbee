@@ -15,7 +15,7 @@
             </ul>
         </div>
         <div class="row">
-			      <form method="post" action="{{ url_for('cam.tasks') }}">
+			      <form method="post" action="{{ url_for('cam.tasks').lstrip('/') }}">
 
                 {% if camera_on%}
 			          <input type="submit" value="Stop View" name="stop" />
@@ -48,7 +48,7 @@
 			      </form>
                 <br>
                 {% if camera_on %}
-                <img src="{{ url_for('cam.video_feed') }}" height="80%">
+                <img src="{{ url_for('cam.video_feed').lstrip('/') }}" height="80%">
                 {% else %}
                 <img src="{{ current_user.gravatar() }}">
                 {% endif %}

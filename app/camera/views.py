@@ -29,15 +29,16 @@ except OSError as error:
     pass
 
 def cam_record():
-    global rec, rec_frame, rec_status
+    global rec, rec_frame, rec_status, camera, camera_on
     rec = True
 
     print('Openning VideoCapture inside the thread')
-    cap = cv2.VideoCapture(camera_device)
+    if not camera_on:
+        camera = cv2.VideoCapture(camera_device)
 
     # Check if camera opened successfully
-    while not cap.isOpened():
-        print(f'Unable to read camera feed cap={cap}')
+    while not camera.isOpened():
+        print(f'Unable to read camera feed camera={camera}')
         if not rec:
             # cv2.destroyAllWindows()
             return
@@ -45,7 +46,7 @@ def cam_record():
     # get a valid frame to determine properties
     for i in count(1):
         print(f'Trying to read (i={i})...')
-        ret, _ = cap.read()
+        ret, _ = camera.read()
         if ret:
             break
         if not rec:
@@ -53,30 +54,26 @@ def cam_record():
 
     # Default resolutions of the frame are obtained.The default resolutions are system dependent.
     # We convert the resolutions from float to integer.
-    frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
+    frame_width = int(camera.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frame_height = int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    frame_rate = int(camera.get(cv2.CAP_PROP_FPS))
     print(f'frame_rate={frame_rate}, frame_width={frame_width}, frame_height={frame_height}')
     # Define the codec and create VideoWriter object.The output is stored in 'outpy.avi' file.
     now = datetime.datetime.now()
     out = cv2.VideoWriter('videos/vid_{}.avi'.format(str(now).replace(":",'')), cv2.VideoWriter_fourcc('M','J','P','G'), frame_rate, (frame_width,frame_height))
 
     while True:
-      rec_status, rec_frame = cap.read()
-
+      rec_status, rec_frame = camera.read()
       if rec_status:
-
         # Write the frame into the file 'output.avi'
         out.write(rec_frame)
-
         # Display the resulting frame
-#        cv2.imshow('frame',frame)
-
+#        Cv2.imshow('frame',frame)
         if not rec:
           break
-
     # When everything done, release the video capture and video write objects
-    cap.release()
+    if not camera_on:
+        camera.release()
     out.release()
     # Closes all the frames
 #    cv2.destroyAllWindows()
@@ -96,7 +93,6 @@ def gen_frames():  # generate frame by frame from camera
                     now = datetime.datetime.now()
                     p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":",''))])
                     cv2.imwrite(p, frame)
-
                 try:
                     _, buffer = cv2.imencode('.jpg', cv2.flip(frame,1))
                     frame = buffer.tobytes()
@@ -150,10 +146,11 @@ def tasks():
             if camera_on and not rec:
                 camera.release()
             camera_on = False
-#                cv2.destroyAllWindows()
+            # cv2.destroyAllWindows()
         elif request.form.get('rec_start'):
-            if camera_on:
-                camera.release()
+            # if camera_on:
+            #     camera.release()
+            #     camera_on = False
             if not rec:
                 #Start new thread for recording the video
                 th = Thread(target = cam_record)
@@ -162,6 +159,7 @@ def tasks():
         elif request.form.get('rec_stop'):
             if rec:
                 rec = False
+                time.sleep(1)
     elif request.method=='GET':
         return redirect(url_for('.index'))
     print('Leaving cam_requests')

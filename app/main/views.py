@@ -233,14 +233,12 @@ def show_all():
     resp.set_cookie('show_followed', '', max_age=30*24*60*60)
     return resp
 
-
 @main.route('/followed')
 @login_required
 def show_followed():
     resp = make_response(redirect(url_for2('.index')))
     resp.set_cookie('show_followed', '1', max_age=30*24*60*60)
     return resp
-
 
 @main.route('/moderate')
 @login_required

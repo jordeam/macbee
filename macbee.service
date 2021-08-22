@@ -6,7 +6,7 @@ User=pi
 Group=pi
 Environment="FLASK_APP=app.py"
 WorkingDirectory=/home/pi/Code/macbee
-ExecStart=/usr/bin/flask run --host 0.0.0.0
+ExecStart=/home/pi/Code/macbee/venv/bin/python /home/pi/Code/macbee/macbee.py
 Restart=on-failure
 
 [Install]

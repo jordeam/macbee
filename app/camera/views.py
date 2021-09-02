@@ -60,25 +60,21 @@ def cam_record():
     frame_height = int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))
     frame_rate = int(camera.get(cv2.CAP_PROP_FPS))
     print(f'frame_rate={frame_rate}, frame_width={frame_width}, frame_height={frame_height}')
-    # Define the codec and create VideoWriter object.The output is stored in 'outpy.avi' file.
+    # Define the codec and create VideoWriter object. The output is stored in 'outpy.avi' file.
     now = datetime.datetime.now()
-    out = cv2.VideoWriter('videos/vid_{}.avi'.format(str(now).replace(":",'')), cv2.VideoWriter_fourcc('M','J','P','G'), frame_rate, (frame_width,frame_height))
+    out = cv2.VideoWriter('videos/vid_{}.avi'.format(str(now).replace(":",'')), cv2.VideoWriter_fourcc('M','J','P','G'), 16, (frame_width, frame_height))
 
     while True:
       rec_status, rec_frame = camera.read()
       if rec_status:
         # Write the frame into the file 'output.avi'
         out.write(rec_frame)
-        # Display the resulting frame
-#        Cv2.imshow('frame',frame)
         if not rec:
           break
-    # When everything done, release the video capture and video write objects
+    # When everything is done, release the video capture and video write objects
     if not camera_on:
         camera.release()
     out.release()
-    # Closes all the frames
-#    cv2.destroyAllWindows()
 
 def gen_frames():  # generate frame by frame from camera
     global out, capture, rec_frame
@@ -111,6 +107,7 @@ def gen_frames():  # generate frame by frame from camera
             except Exception as e:
                 pass
 
+@cam.route('/macbee/camera')
 @cam.route('/camera')
 @login_required
 def index():
@@ -124,6 +121,7 @@ def video_feed():
     else:
         return redirect(url_for2('.index'))
 
+@cam.route('/macbee/cam_requests',methods=['POST','GET'])
 @cam.route('/cam_requests',methods=['POST','GET'])
 @login_required
 def tasks():

@@ -4,7 +4,7 @@ Description=Bridge for HTTP Macbee service
 [Service]
 User=pi
 Group=pi
-ExecStart=/usr/bin/ssh -NTC -o StrictHostKeyChecking=Off -o ServerAliveInterval=60 -o ExitOnForwardFailure=yes -R 5050:localhost:5000 igbt.eesc.usp.br -l macbee
+ExecStart=/usr/bin/ssh -NTC -o StrictHostKeyChecking=Off -o ServerAliveInterval=60 -o ExitOnForwardFailure=yes -R 5050:localhost:5000 macbee.dronedarium.com -l macbee
 Restart=on-failure
 TimeoutSec=30
 RestartSec=30

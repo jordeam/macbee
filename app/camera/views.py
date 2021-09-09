@@ -107,13 +107,11 @@ def gen_frames():  # generate frame by frame from camera
             except Exception as e:
                 pass
 
-@cam.route('/macbee/camera')
 @cam.route('/camera')
 @login_required
 def index():
     return render_template('camera/camera.html', camera_on = camera_on, neg = neg, grey = grey, rec=rec)
 
-@cam.route('/macbee/video_feed')
 @cam.route('/video_feed')
 @login_required
 def video_feed():
@@ -122,7 +120,6 @@ def video_feed():
     else:
         return redirect(url_for('.index'))
 
-@cam.route('/macbee/cam_requests',methods=['POST','GET'])
 @cam.route('/cam_requests',methods=['POST','GET'])
 @login_required
 def tasks():
@@ -162,5 +159,5 @@ def tasks():
                 rec = False
                 time.sleep(1)
     print('Leaving cam_requests')
-    return redirect('macbee/camera')
+    return redirect(url_for('.index'))
 

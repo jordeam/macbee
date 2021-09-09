@@ -19,18 +19,18 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url_for('main.index').lstrip('/') }}">MacBee</a>
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">MacBee</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('main.index').lstrip('/') }}">Home</a></li>
+                <li><a href="{{ url_for('main.index') }}">Home</a></li>
                 {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('cam.index').lstrip('/') }}">Camera</a></li>
+                <li><a href="{{ url_for('cam.index') }}">Camera</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.can(Permission.MODERATE) %}
-                <li><a href="{{ url_for('main.moderate').lstrip('/') }}">Moderate Comments</a></li>
+                <li><a href="{{ url_for('main.moderate') }}">Moderate Comments</a></li>
                 {% endif %}
                 {% if current_user.is_authenticated %}
                 <li class="dropdown">
@@ -41,11 +41,11 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ url_for('auth.change_password', _external=True) }}">Change Password</a></li>
                         <!-- <li><a href="{{ url_for('auth.change_email_request', _external=True) }}">Change Email</a></li> -->
-                        <li><a href="{{ url_for('auth.logout').lstrip('/') }}">Log Out</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
                     </ul>
                 </li>
                 {% else %}
-                <li><a href="{{ url_for('auth.login').lstrip('/') }}">Log In</a></li>
+                <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
                 {% endif %}
             </ul>
         </div>

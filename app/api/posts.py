@@ -1,5 +1,5 @@
 from flask import jsonify, request, g, url_for, current_app
-from ..url_for2 import url_for2
+# from ..url_for2 import url_for2
 
 from .. import db
 from ..models import Post, Permission
@@ -16,10 +16,10 @@ def get_posts():
     posts = pagination.items
     prev = None
     if pagination.has_prev:
-        prev = url_for2('api.get_posts', page=page-1)
+        prev = url_for('api.get_posts', page=page-1)
     next = None
     if pagination.has_next:
-        next = url_for2('api.get_posts', page=page+1)
+        next = url_for('api.get_posts', page=page+1)
     return jsonify({
         'posts': [post.to_json() for post in posts],
         'prev': prev,
@@ -42,7 +42,7 @@ def new_post():
     db.session.add(post)
     db.session.commit()
     return jsonify(post.to_json()), 201, \
-        {'Location': url_for2('api.get_post', id=post.id)}
+        {'Location': url_for('api.get_post', id=post.id)}
 
 
 @api.route('/posts/<int:id>', methods=['PUT'])

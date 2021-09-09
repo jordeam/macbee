@@ -1,5 +1,5 @@
 from flask import Flask, render_template, Response, request, redirect, url_for
-from ..url_for2 import url_for2
+# from ..url_for2 import url_for2
 
 from flask_login import login_required, current_user
 import cv2
@@ -111,15 +111,16 @@ def gen_frames():  # generate frame by frame from camera
 @cam.route('/camera')
 @login_required
 def index():
-    return render_template('camera/camera.html', camera_on = camera_on, neg = neg, grey = grey, rec=rec, url_for2=url_for2)
+    return render_template('camera/camera.html', camera_on = camera_on, neg = neg, grey = grey, rec=rec)
 
+@cam.route('/macbee/video_feed')
 @cam.route('/video_feed')
 @login_required
 def video_feed():
     if camera_on or rec:
         return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
     else:
-        return redirect(url_for2('.index'))
+        return redirect(url_for('.index'))
 
 @cam.route('/macbee/cam_requests',methods=['POST','GET'])
 @cam.route('/cam_requests',methods=['POST','GET'])
@@ -162,5 +163,4 @@ def tasks():
                 time.sleep(1)
     print('Leaving cam_requests')
     return redirect('macbee/camera')
-    # return redirect(url_for2('.index'))
 

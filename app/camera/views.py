@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, request, redirect, url_for
+from flask import Flask, render_template, Response, request, redirect, url_for, send_file
 # from ..url_for2 import url_for2
 
 from flask_login import login_required, current_user
@@ -9,6 +9,7 @@ import numpy as np
 from threading import Thread
 from . import cam
 from itertools import count
+import glob, re
 
 capture = False
 grey = False
@@ -160,4 +161,37 @@ def tasks():
                 time.sleep(1)
     print('Leaving cam_requests')
     return redirect(url_for('.index'))
+
+@cam.route('/tabela',methods=['POST','GET'])
+def tabela():
+    return render_template('camera/tabela.html')
+
+@cam.route('/files',methods=['POST','GET'])
+@login_required
+def files():
+    fns = glob.glob('videos/*.avi')
+    if fns != []:
+        fns = list(map(lambda x: x.lstrip('videos').lstrip('/'), fns))
+        dates = list(map(lambda x: re.search(r'[0-9]+-[0-9]+-[0-9]+', x).group(0), fns))
+        times = list(map(lambda x: re.search(r' [0-9]+\.[0-9]+.avi$', x).group(0).lstrip().rstrip('.avi'), fns))
+        d = list(map(lambda x, y, z: list([x, y, z]), fns, dates, times))
+    return render_template('camera/files.html', data = d)
+
+@cam.route('/file_action',methods=['POST'])
+@login_required
+def file_action():
+    if request.form.get('download'):
+        print('download')
+        fn = 'vid_{} {}.avi'.format(request.form.get('date'), request.form.get('time'))
+        print(f'fn={fn} getenv("PWD")={os.getenv("PWD")}')
+        try:
+            return send_file('../videos/' + fn)
+        except Exception as e:
+            print(str(e))
+    if request.form.get('erase'):
+        fn = 'videos/vid_{} {}.avi'.format(request.form.get('date'), request.form.get('time'))
+        print('erase')
+        print(f'fn={fn}')
+        os.unlink(fn)
+    return redirect(url_for('cam.files'))
 

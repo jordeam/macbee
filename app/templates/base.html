@@ -24,8 +24,10 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('main.index') }}">Home</a></li>
+                <li><a href="{{ url_for('cam.tabela') }}">Tabela</a></li>
                 {% if current_user.is_authenticated %}
                 <li><a href="{{ url_for('cam.index') }}">Camera</a></li>
+                <li><a href="{{ url_for('cam.files') }}">Arquivos</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">

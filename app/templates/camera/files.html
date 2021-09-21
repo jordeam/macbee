@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Macbee{% endblock %}
+
+{% block page_content %}
+
+<div class="page-header">
+    <h1>Arquivos salvos no SDCard</h1>
+</div>
+
+<table>
+    {% for r, d, tm in data %}
+    <tr>
+        <td>{{ r }}</td>
+        <td><form method="POST" action="file_action"><input type="hidden"  name="date" value="{{ d }}"><input type="hidden" name="time" value="{{ tm }}"><input type="Submit" name="download" value="Baixar"><input type="Submit" name="erase" value="Apagar"></form></td>
+    </tr>
+    {% endfor %}
+</ul>
+
+{% endblock %}

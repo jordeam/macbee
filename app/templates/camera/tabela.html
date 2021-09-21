@@ -13,60 +13,72 @@
         <th> Tensão no Knob (V)</th>
         <th> Tensão eficaz verdadeira (V)<a href="#note1">[1]</a> </th>
         <th> Corrente eficaz (A)</th>
+        <th> Densidade de Fluxo Magnético (mT)<a href="#note2">[2]</a> </th>
     </tr>
     <tr>
         <td> 25 </td>
-        <td> 27
+        <td> 27 </td>
         <td> 0,373 </td>
+        <td> 0,95 </td>
     </tr>
     <tr>
         <td> 50 </td>
         <td> 48,6 </td>
         <td> 0,65 </td>
+        <td> 1,66 </td>
     </tr>
     <tr>
         <td> 75 </td>
         <td> 69,8 </td>
         <td> 0,97 </td>
+        <td> 2,48 </td>
     </tr>
     <tr>
         <td> 100 </td>
         <td> 90,4 </td>
         <td> 1,28 </td>
+        <td> 3,27 </td>
     </tr>
     <tr>
         <td> 125 </td>
         <td> 113,2 </td>
         <td> 1,62 </td>
+        <td> 4,14 </td>
     </tr>
     <tr>
         <td> 150 </td>
         <td> 139,2 </td>
         <td> 1,98 </td>
+        <td> 5,06 </td>
     </tr>
     <tr>
         <td> 175 </td>
         <td> 166,9 </td>
         <td> 2,39 </td>
+        <td> 6,10 </td>
     </tr>
     <tr>
         <td> 200 </td>
         <td> 197 </td>
         <td> 2,82 </td>
+        <td> 7,20 </td>
     </tr>
     <tr>
         <td> 225 </td>
         <td> 224,7 </td>
         <td> 3,24 </td>
+        <td> 8,27 </td>
     </tr>
     <tr>
         <td> MAX </td>
         <td> 243,1 </td>
         <td> 3,51 </td>
+        <td> 8,96 </td>
     </tr>
 </table>
 
 <p id="note1"> [1] Valores medidos com voltímetro na saída do VARIAC, para uma entrada de tensão de 220V (medida com o voltímetro).</p>
+<p id="note2"> [2] Valor máximo da densidade de fluxo magnético na trajetória de campo mínimo.</p>
 
 <h2>Distribuição da Densidade de Fluxo Magnético</h2>
 
@@ -78,6 +90,9 @@
 
 <h2> Esquema de Ligações</h2>
 
+<p> A figura abaixo mostra o esquema de ligações das bobinas. As duas bibinas devem ser separadas por uma distância de 20cm, que foi a condição de projeto. Os terminais de uma mesma cor devem ser sempre colocados para o mesmo lado, caso contrário, os fluxos ficarão em oposição e o campo será muito mais baixo, anulando-se no centro. Um terminal do VARIAC deve ser conectado a uma cor (por exemplo, vermelho) e o outro terminal, à outra cor (por exemplo, preto). Os terminais restantes devem ser conectados ao VARIAC.
 
-    {% endblock %}
+<img src="{{ url_for('static', filename = 'Ligacoes.svg') }}" alt="Esquema de Ligações" width="1000">
+
+{% endblock %}
  

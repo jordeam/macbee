@@ -175,6 +175,8 @@ def files():
         dates = list(map(lambda x: re.search(r'[0-9]+-[0-9]+-[0-9]+', x).group(0), fns))
         times = list(map(lambda x: re.search(r' [0-9]+\.[0-9]+.avi$', x).group(0).lstrip().rstrip('.avi'), fns))
         d = list(map(lambda x, y, z: list([x, y, z]), fns, dates, times))
+    else:
+        d = []
     return render_template('camera/files.html', data = d)
 
 @cam.route('/file_action',methods=['POST'])

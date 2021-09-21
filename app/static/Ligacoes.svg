@@ -28,7 +28,36 @@
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs1558" />
+     id="defs1558">
+    <marker
+       style="overflow:visible;"
+       id="Arrow1Mend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4) rotate(180) translate(10,0)"
+         style="fill-rule:evenodd;stroke:#ffff00;stroke-width:1pt;stroke-opacity:0.536342;fill:#ffff00;fill-opacity:0.536342"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path852" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4) translate(10,0)"
+         style="fill-rule:evenodd;stroke:#ffff00;stroke-width:1pt;stroke-opacity:0.536342;fill:#ffff00;fill-opacity:0.536342"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path849" />
+    </marker>
+  </defs>
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -3854,5 +3883,27 @@ xGf3iYBzEjiOiDd36jg9RgweZeYZtojlbmoGGOFn/9k=
          x="2065.4592"
          y="772.08417"
          id="tspan2185">espira</tspan></text>
+    <path
+       style="fill:none;fill-opacity:1;stroke:#ffff00;stroke-width:7.55906;stroke-linecap:square;stroke-opacity:0.536342"
+       d="M 1182.1066,508.05928 H 963.39451"
+       id="path2223" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#ffff00;stroke-width:7.55906;stroke-linecap:square;stroke-opacity:0.536342"
+       d="M 1207.9749,1192.2555 H 971.45936"
+       id="path2225" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#ffff00;stroke-width:7.559;stroke-linecap:square;stroke-opacity:0.536342;stroke-miterlimit:4;stroke-dasharray:none;marker-start:url(#Arrow1Mstart);marker-end:url(#Arrow1Mend)"
+       d="M 1070.9282,1188.7026 V 518.5617"
+       id="path2227" />
+    <text
+       xml:space="preserve"
+       style="font-size:53.3333px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;fill:#ffff00;fill-opacity:1"
+       x="902.20953"
+       y="826.73328"
+       id="text2283"><tspan
+         sodipodi:role="line"
+         id="tspan2281"
+         x="902.20953"
+         y="826.73328">20cm</tspan></text>
   </g>
 </svg>

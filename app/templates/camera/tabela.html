@@ -10,59 +10,72 @@
 
 <table class="cssTable" border="1">
     <tr>
-        <th>Tensão no Knob (V)</td>
-        <th>Corrente eficaz (A)</td>
-        <th> Densidade de Campo Magnético (Gauss) </td>
+        <th> Tensão no Knob (V)</th>
+        <th> Tensão eficaz verdadeira (V)<a href="#note1">[1]</a> </th>
+        <th> Corrente eficaz (A)</th>
     </tr>
     <tr>
         <td> 25 </td>
-        <td> 0,347 </td>
-        <td> </td>
+        <td> 27
+        <td> 0,373 </td>
     </tr>
     <tr>
         <td> 50 </td>
-        <td> 0,625 </td>
-        <td> </td>
+        <td> 48,6 </td>
+        <td> 0,65 </td>
     </tr>
     <tr>
         <td> 75 </td>
-        <td> 0,90 </td>
-        <td> </td>
+        <td> 69,8 </td>
+        <td> 0,97 </td>
     </tr>
     <tr>
         <td> 100 </td>
-        <td> 1,19 </td>
-        <td> </td>
+        <td> 90,4 </td>
+        <td> 1,28 </td>
     </tr>
     <tr>
         <td> 125 </td>
-        <td> 1,51 </td>
-        <td> </td>
+        <td> 113,2 </td>
+        <td> 1,62 </td>
     </tr>
     <tr>
         <td> 150 </td>
-        <td> 1,84 </td>
-        <td> </td>
+        <td> 139,2 </td>
+        <td> 1,98 </td>
     </tr>
     <tr>
         <td> 175 </td>
-        <td> 2,22 </td>
-        <td> </td>
+        <td> 166,9 </td>
+        <td> 2,39 </td>
     </tr>
     <tr>
         <td> 200 </td>
-        <td> 2,61 </td>
-        <td> </td>
+        <td> 197 </td>
+        <td> 2,82 </td>
     </tr>
     <tr>
         <td> 225 </td>
-        <td> 3,0 </td>
-        <td> </td>
+        <td> 224,7 </td>
+        <td> 3,24 </td>
     </tr>
     <tr>
         <td> MAX </td>
-        <td> 3,25 </td>
-        <td> </td>
+        <td> 243,1 </td>
+        <td> 3,51 </td>
     </tr>
 </table>
+
+<p id="note1"> [1] Valores medidos com voltímetro na saída do VARIAC, para uma entrada de tensão de 220V (medida com o voltímetro).</p>
+
+<h2>Distribuição da Densidade de Fluxo Magnético</h2>
+
+<p>A seguir, a distribuição da Densidade de fluxo magnético para uma corrente com valor eficaz de 2,82A.</p>
+
+<p> Os valores são proporcionais à corrente da tabela acima.</p>
+
+<img src="{{ url_for('static', filename = 'Field-w-4A.jpg') }}" alt="Distribuição da Densidade de Fluxo" width="1000">
+
+
+
     {% endblock %}

@@ -1,16 +1,6 @@
 Macbee
 ======
 
-# SSH
+# Raspberry Pi pin LEDs
 
-If you do not have a key, generate it:
-
-`$ sudo ssh-keygen-t rsa -b 4096 -C "your_email@domain.com"`
-
-Copy it:
-
-`$ ssh-copy-id remote_username@server_ip_address`
-
-Test it:
-
-`$ ssh remote_username@server_ip_address`
+Use GPIOs 18, 23, 24 and 25 for LED1, LED2, LED3 and LED4, respectively.

@@ -16,37 +16,56 @@
             </ul>
         </div>
         <div class="row">
-			      <form method="post" action="{{ url_for('cam.tasks') }}">
+                <p> <table>
+                    <tr>
+                        <td>LEDs:</td>
+                        <td>&nbsp;
+                            <input type="checkbox" id="led1" name="led1" onclick="led_check(this)">
+                            <label for="led1">LED1</label></td>
+                        <td>&nbsp;
+                            <input type="checkbox" id="led2" name="led2" onclick="led_check(this)">
+                            <label for="led2">LED2</label></td>
+                        <td>&nbsp;
+                            <input type="checkbox" id="led3" name="led3" onclick="led_check(this)">
+                            <label for="led3">LED3</label></td>
+                        <td>&nbsp;
+                            <input type="checkbox" id="led4" name="led4" onclick="led_check(this)">
+                            <label for="led4">LED4</label></td>
+                    </tr>
+                </table>
+                </p>
+                <form method="post" action="{{ url_for('cam.tasks') }}">
+                    <p>
+                        {% if camera_on%}
+			                  <input type="submit" value="Stop View" name="stop" />
+                        {% else %}
+                        <input type="submit" value="View Camera" name="start" />
+                        {% endif %}
 
-                {% if camera_on%}
-			          <input type="submit" value="Stop View" name="stop" />
-                {% else %}
-                <input type="submit" value="View Camera" name="start" />
-                {% endif %}
+                        {% if rec %}
 
-                {% if rec %}
+			                  <input type="submit" value="Stop Recording" name="rec_stop" />
 
-			          <input type="submit" value="Stop Recording" name="rec_stop" />
+                        {% else %}
 
-                {% else %}
+			                  <input type="submit" value="Capture" name="click"/>
 
-			          <input type="submit" value="Capture" name="click"/>
+                        {% if grey %}
+			                  <input type="submit" value="Color" name="color" />
+                        {% else %}
+			                  <input type="submit" value="Grey" name="grey" />
+                        {% endif %}
 
-                {% if grey %}
-			          <input type="submit" value="Color" name="color" />
-                {% else %}
-			          <input type="submit" value="Grey" name="grey" />
-                {% endif %}
+                        {% if neg %}
+			                  <input type="submit" value="Positive" name="pos" />
+                        {% else %}
+			                  <input type="submit" value="Negative" name="neg" />
+                        {% endif %}
 
-                {% if neg %}
-			          <input type="submit" value="Positive" name="pos" />
-                {% else %}
-			          <input type="submit" value="Negative" name="neg" />
-                {% endif %}
-
-			          <input type="submit" value="Start Recording" name="rec_start" />
-                {% endif %}
-			      </form>
+			                  <input type="submit" value="Start Recording" name="rec_start" />
+                        {% endif %}
+                    </p>
+			          </form>
                 <br>
                 {% if camera_on %}
                 <img src="{{ url_for('cam.video_feed') }}" height="80%">
@@ -55,5 +74,5 @@
                 {% endif %}
         </div>
     </div>
-
-{% endblock %}
+    <script src="{{url_for('static', filename='led_check.js')}}"></script>
+    {% endblock %}

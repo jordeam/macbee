@@ -11,13 +11,63 @@ from . import cam
 from itertools import count
 import glob, re
 
+gpio_ok = True
+
+try:
+    import RPi.GPIO as GPIO
+except:
+    gpio_ok = False
+
+if gpio_ok:
+    print('GPIO support OK!')
+else:
+    print('WARNING: GPIO in failsafe mode')
+
 capture = False
 grey = False
 neg = False
 camera_on = False
 rec = False
 
+verbose = True
+
+# LEDs state
+leds_status = [False, False, False, False]
+led_labels = { 'led1' : 0, 'led2' : 1, 'led3' : 2, 'led4' : 3}
+
+gpio_led1 = 18
+gpio_led2 = 23
+gpio_led3 = 24
+gpio_led4 = 25
+gpio_pins = [gpio_led1, gpio_led2, gpio_led3, gpio_led4]
+
 camera_device = 0
+
+if gpio_ok:
+    # Set up GPIO pins
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+    for pin in gpio_pins:
+        GPIO.setup(pin, GPIO.OUT)
+        GPIO.output(pin,0)
+
+def led_set(led, on):
+    if verbose:
+        print(f'led_set: LED{led + 1} ' + ('ON' if on else 'OFF'))
+    leds_status[led] = True if on else False
+    if gpio_ok:
+        GPIO.output(gpio_pins[led], on)
+
+# not used anywhere
+def turn_leds_off():
+    for led in range(4):
+        led_set(led, 0)
+
+# not used anywhere
+def turn_leds_on():
+    for led in range(4):
+        led_set(led, leds_status[led])
+
 
 #make shots directory to save pics
 try:
@@ -111,7 +161,8 @@ def gen_frames():  # generate frame by frame from camera
 @cam.route('/camera')
 @login_required
 def index():
-    return render_template('camera/camera.html', camera_on = camera_on, neg = neg, grey = grey, rec=rec)
+    global camera_on, led1, led2, led3, led4, neg, grey, rec
+    return render_template('camera/camera.html', camera_on = camera_on, neg = neg, grey = grey, rec = rec)
 
 @cam.route('/video_feed')
 @login_required
@@ -124,7 +175,7 @@ def video_feed():
 @cam.route('/cam_requests',methods=['POST','GET'])
 @login_required
 def tasks():
-    global camera_on,camera, capture, grey, neg, rec
+    global camera_on,camera, capture, grey, neg, rec, led1, led2, led3, led4
     print('Entering cam_requests')
     if request.method == 'POST':
         if request.form.get('click'):
@@ -147,9 +198,6 @@ def tasks():
             camera_on = False
             # cv2.destroyAllWindows()
         elif request.form.get('rec_start'):
-            # if camera_on:
-            #     camera.release()
-            #     camera_on = False
             if not rec:
                 #Start new thread for recording the video
                 th = Thread(target = cam_record)
@@ -196,4 +244,17 @@ def file_action():
         print(f'fn={fn}')
         os.unlink(fn)
     return redirect(url_for('cam.files'))
+
+@cam.route('/set_led/<string:led>/<int:on>', methods=['GET'])
+@login_required
+def set_led(led, on):
+    n = led_labels[led]
+    led_set(n, on)
+    return str(on)
+
+@cam.route('/get_led/<string:led>', methods=['GET'])
+@login_required
+def get_led(led):
+    n = led_labels[led]
+    return str('1' if leds_status[led_labels[led]] else '0')
 

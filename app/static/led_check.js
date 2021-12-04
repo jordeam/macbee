@@ -25,8 +25,8 @@ function led_init_check(led) {
 }
 
 window.onload = function() {
-    led_init_check("led1");
-    led_init_check("led2");
-    led_init_check("led3");
-    led_init_check("led4");
+    // led_init_check("led1");
+    // led_init_check("led2");
+    // led_init_check("led3");
+    // led_init_check("led4");
 }

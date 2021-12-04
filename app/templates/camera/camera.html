@@ -16,24 +16,28 @@
             </ul>
         </div>
         <div class="row">
-                <p> <table>
+            <p><form method="post" action="/set_leds">
+                <table>
                     <tr>
                         <td>LEDs:</td>
                         <td>&nbsp;
-                            <input type="checkbox" id="led1" name="led1" onclick="led_check(this)">
+                            <input type="checkbox" id="led1" name="led1" {% if led1 %} checked {% endif %}>
                             <label for="led1">LED1</label></td>
                         <td>&nbsp;
-                            <input type="checkbox" id="led2" name="led2" onclick="led_check(this)">
+                            <input type="checkbox" id="led2" name="led2" {% if led2 %} checked {% endif %}>
                             <label for="led2">LED2</label></td>
                         <td>&nbsp;
-                            <input type="checkbox" id="led3" name="led3" onclick="led_check(this)">
+                            <input type="checkbox" id="led3" name="led3" {% if led3 %} checked {% endif %}> 
                             <label for="led3">LED3</label></td>
                         <td>&nbsp;
-                            <input type="checkbox" id="led4" name="led4" onclick="led_check(this)">
+                            <input type="checkbox" id="led4" name="led4" {% if led4 %} checked {% endif %}>
                             <label for="led4">LED4</label></td>
+                        <td>&nbsp;
+                            <input type="submit" name="set_leds" value="Set LEDs"></td>
                     </tr>
                 </table>
-                </p>
+            </form>
+            </p>
                 <form method="post" action="{{ url_for('cam.tasks') }}">
                     <p>
                         {% if camera_on%}

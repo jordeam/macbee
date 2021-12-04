@@ -113,7 +113,7 @@ def cam_record():
     print(f'frame_rate={frame_rate}, frame_width={frame_width}, frame_height={frame_height}')
     # Define the codec and create VideoWriter object. The output is stored in 'outpy.avi' file.
     now = datetime.datetime.now()
-    out = cv2.VideoWriter('videos/vid_{}.avi'.format(str(now).replace(":",'')), cv2.VideoWriter_fourcc('M','J','P','G'), 16, (frame_width, frame_height))
+    out = cv2.VideoWriter('videos/vid_{}.avi'.format(str(now).replace(":",'')), cv2.VideoWriter_fourcc('M','J','P','G'), 20, (frame_width, frame_height))
 
     while True:
       rec_status, rec_frame = camera.read()
@@ -161,8 +161,8 @@ def gen_frames():  # generate frame by frame from camera
 @cam.route('/camera')
 @login_required
 def index():
-    global camera_on, led1, led2, led3, led4, neg, grey, rec
-    return render_template('camera/camera.html', camera_on = camera_on, neg = neg, grey = grey, rec = rec)
+    global camera_on, neg, grey, rec, leds_status
+    return render_template('camera/camera.html', camera_on = camera_on, neg = neg, grey = grey, rec = rec, led1 = leds_status[0], led2 = leds_status[1], led3 = leds_status[2], led4 = leds_status[3])
 
 @cam.route('/video_feed')
 @login_required
@@ -175,7 +175,7 @@ def video_feed():
 @cam.route('/cam_requests',methods=['POST','GET'])
 @login_required
 def tasks():
-    global camera_on,camera, capture, grey, neg, rec, led1, led2, led3, led4
+    global camera_on,camera, capture, grey, neg, rec
     print('Entering cam_requests')
     if request.method == 'POST':
         if request.form.get('click'):
@@ -196,7 +196,6 @@ def tasks():
             if camera_on and not rec:
                 camera.release()
             camera_on = False
-            # cv2.destroyAllWindows()
         elif request.form.get('rec_start'):
             if not rec:
                 #Start new thread for recording the video
@@ -257,4 +256,14 @@ def set_led(led, on):
 def get_led(led):
     n = led_labels[led]
     return str('1' if leds_status[led_labels[led]] else '0')
+
+@cam.route('/set_leds', methods = ['POST'])
+@login_required
+def set_leds():
+    for led in led_labels:
+        if request.form.get(led):
+            led_set(led_labels[led], 1)
+        else:
+            led_set(led_labels[led], 0)
+    return redirect(url_for('cam.index'))
 

@@ -9,6 +9,7 @@ Use GPIOs 18, 23, 24 and 25 for LED1, LED2, LED3 and LED4, respectively.
 ## Para criar o banco de dados
 
 ```bash
+export FLASK_APP=macbee.py
 flask db init
 flask db migrate
 flask db upgrade
